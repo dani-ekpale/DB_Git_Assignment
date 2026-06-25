@@ -1,0 +1,193 @@
+Name:Daniel Ekpale
+Id: 26372028
+Cohort:C
+
+MariaDB [indassignment2]> CREATE DATABASE MainAssignment;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [indassignment2]> USE MainAssignment;
+Database changed
+MariaDB [MainAssignment]> -- 1. Base Table: Department
+MariaDB [MainAssignment]> CREATE TABLE Department (
+    ->     deptNo VARCHAR(5) PRIMARY KEY,
+    ->     deptName VARCHAR(50) NOT NULL,
+    ->     mgrEmpNo VARCHAR(5)
+    -> );
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [MainAssignment]> -- 2. Base Table: Employee
+MariaDB [MainAssignment]> CREATE TABLE Employee (
+    ->     empNo VARCHAR(5) PRIMARY KEY,
+    ->     fName VARCHAR(30) NOT NULL,
+    ->     lName VARCHAR(30) NOT NULL,
+    ->     address VARCHAR(100),
+    ->     DOB DATE,
+    ->     sex CHAR(1) NOT NULL CHECK (sex IN ('M', 'F')),
+    ->     position VARCHAR(30) NOT NULL CHECK (position IN ('Manager', 'Team Leader', 'Analyst', 'Software Developer')),
+    ->     deptNo VARCHAR(5),
+    ->     FOREIGN KEY (deptNo) REFERENCES Department(deptNo)
+    -> );
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [MainAssignment]> ALTER TABLE Department ADD FOREIGN KEY (mgrEmpNo) REFERENCES Employee(empNo);
+Query OK, 0 rows affected (0.015 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [MainAssignment]>
+MariaDB [MainAssignment]> -- 3. Base Table: Project
+MariaDB [MainAssignment]> CREATE TABLE Project (
+    ->     projNo VARCHAR(5) PRIMARY KEY,
+    ->     projName VARCHAR(50) NOT NULL,
+    ->     deptNo VARCHAR(5) NOT NULL,
+    ->     FOREIGN KEY (deptNo) REFERENCES Department(deptNo)
+    -> );
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [MainAssignment]> -- 4. Base Table: WorksOn
+MariaDB [MainAssignment]> CREATE TABLE WorksOn (
+    ->     empNo VARCHAR(5),
+    ->     projNo VARCHAR(5),
+    ->     dateWorked DATE,
+    ->     hoursWorked INT CHECK (hoursWorked >= 0 AND hoursWorked <= 40),
+    ->     PRIMARY KEY (empNo, projNo, dateWorked),
+    ->     FOREIGN KEY (empNo) REFERENCES Employee(empNo),
+    ->     FOREIGN KEY (projNo) REFERENCES Project(projNo)
+    -> );
+Query OK, 0 rows affected (0.006 sec)
+
+MariaDB [MainAssignment]> CREATE TABLE Part (
+    ->     partNo VARCHAR(10),
+    ->     contract VARCHAR(20),
+    ->     partCost DECIMAL(10, 2) NOT NULL,
+    ->     PRIMARY KEY (partNo, contract)
+    -> );
+Query OK, 0 rows affected (0.005 sec)
+
+MariaDB [MainAssignment]> -- Insert Departments
+MariaDB [MainAssignment]> INSERT INTO Department (deptNo, deptName, mgrEmpNo) VALUES
+    -> ('D1', 'Information Technology', NULL),
+    -> ('D2', 'Planning', NULL),
+    -> ('D3', 'Research & Development', NULL);
+Query OK, 3 rows affected (0.001 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+MariaDB [MainAssignment]> INSERT INTO Employee (empNo, fName, lName, address, DOB, sex, position, deptNo) VALUES
+    -> ('E1', 'Sarah', 'Connor', '123 Tech Lane', '1992-05-14', 'F', 'Manager', 'D1'),
+    -> ('E2', 'John', 'Doe', '456 Cyber Ave', '1994-10-22', 'M', 'Software Developer', 'D1'),
+    -> ('E3', 'Ellen', 'Ripley', '789 Orbit Way', '1988-01-05', 'F', 'Manager', 'D2'),
+    -> ('E4', 'James', 'Smith', '101 Plan Blvd', '1995-07-19', 'M', 'Analyst', 'D2'),
+    -> ('E5', 'Marcus', 'Wright', '202 Forge St', '1991-11-30', 'M', 'Team Leader', 'D3');
+Query OK, 5 rows affected (0.001 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+MariaDB [MainAssignment]> UPDATE Department SET mgrEmpNo = 'E1' WHERE deptNo = 'D1';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [MainAssignment]> UPDATE Department SET mgrEmpNo = 'E3' WHERE deptNo = 'D2';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [MainAssignment]>
+MariaDB [MainAssignment]> -- Insert Projects (Explicitly creating 'SCCS')
+MariaDB [MainAssignment]> INSERT INTO Project (projNo, projName, deptNo) VALUES
+    -> ('SCCS', 'Security Core Control System', 'D1'),
+    -> ('P102', 'Cloud Migration Sync', 'D1'),
+    -> ('P201', 'Strategic Horizon 2030', 'D2'),
+    -> ('P301', 'Alpha Engine Prototype', 'D3');
+Query OK, 4 rows affected (0.001 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+
+MariaDB [MainAssignment]> -- Insert WorksOn allocation entries
+MariaDB [MainAssignment]> INSERT INTO WorksOn (empNo, projNo, dateWorked, hoursWorked) VALUES
+    -> ('E1', 'SCCS', '2026-06-01', 8),
+    -> ('E1', 'P102', '2026-06-02', 6),
+    -> ('E2', 'SCCS', '2026-06-01', 8),
+    -> ('E2', 'SCCS', '2026-06-02', 7),
+    -> ('E3', 'P201', '2026-06-01', 8),
+    -> ('E4', 'P201', '2026-06-01', 5),
+    -> ('E5', 'P301', '2026-06-01', 10);
+Query OK, 7 rows affected (0.001 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+
+MariaDB [MainAssignment]> INSERT INTO Part (partNo, contract, partCost) VALUES
+    -> ('PT-01', 'CONT-A', 1250.00),
+    -> ('PT-01', 'CONT-B', 950.00),
+    -> ('PT-02', 'CONT-A', 450.00),
+    -> ('PT-03', 'CONT-C', 2100.00);
+Query OK, 4 rows affected (0.001 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [MainAssignment]>
+MariaDB [MainAssignment]> CREATE VIEW FemaleManagedProjects AS
+    -> SELECT p.projNo, p.projName, p.deptNo
+    -> FROM Project p
+    -> JOIN Department d ON p.deptNo = d.deptNo
+    -> JOIN Employee e ON d.mgrEmpNo = e.empNo
+    -> WHERE e.sex = 'F'
+    -> ORDER BY p.projNo;
+Query OK, 0 rows affected (0.004 sec)
+
+MariaDB [MainAssignment]>
+MariaDB [MainAssignment]> CREATE VIEW EmployeeProjectHours AS
+    -> SELECT e.empNo, e.fName, e.lName, p.projName, w.hoursWorked
+    -> FROM Employee e
+    -> JOIN WorksOn w ON e.empNo = w.empNo
+    -> JOIN Project p ON w.projNo = p.projNo;
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [MainAssignment]>
+MariaDB [MainAssignment]> CREATE VIEW EmpProject(empNo, projNo, totalHours)
+    -> AS SELECT w.empNo, w.projNo, SUM(hoursWorked)
+    -> FROM Employee e, Project p, WorksOn w
+    -> WHERE e.empNo = w.empNo AND p.projNo = w.projNo
+    -> GROUP BY w.empNo, w.projNo;
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [MainAssignment]> SELECT * FROM EmpProject;
++-------+--------+------------+
+| empNo | projNo | totalHours |
++-------+--------+------------+
+| E1    | P102   |          6 |
+| E1    | SCCS   |          8 |
+| E2    | SCCS   |         15 |
+| E3    | P201   |          8 |
+| E4    | P201   |          5 |
+| E5    | P301   |         10 |
++-------+--------+------------+
+6 rows in set (0.001 sec)
+
+MariaDB [MainAssignment]> SELECT projNo FROM EmpProject WHERE projNo = 'SCCS';
++--------+
+| projNo |
++--------+
+| SCCS   |
+| SCCS   |
++--------+
+2 rows in set (0.000 sec)
+
+MariaDB [MainAssignment]> SELECT COUNT(projNo) FROM EmpProject WHERE empNo = 'E1';
++---------------+
+| COUNT(projNo) |
++---------------+
+|             2 |
++---------------+
+1 row in set (0.000 sec)
+
+MariaDB [MainAssignment]> SELECT empNo, totalHours FROM EmpProject GROUP BY empNo;
++-------+------------+
+| empNo | totalHours |
++-------+------------+
+| E1    |          6 |
+| E2    |         15 |
+| E3    |          8 |
+| E4    |          5 |
+| E5    |         10 |
++-------+------------+
+5 rows in set (0.001 sec)
+
+MariaDB [MainAssignment]>
