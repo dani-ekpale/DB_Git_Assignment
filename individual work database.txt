@@ -1,0 +1,364 @@
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| companydb          |
+| contactlist        |
+| contactmanager     |
+| elite_video        |
+| hotellobby         |
+| information_schema |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+11 rows in set (0.061 sec)
+
+MariaDB [(none)]> create database grosvenor_hotel;
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [(none)]> use grosvenor_hotel;
+Database changed
+MariaDB [grosvenor_hotel]> create table employee(empno varchar(10) primary key, fname varchar(30), lname varchar(30), address varchar(50), dob date, sex varchar(10), position varchar(20), deptno int);
+Query OK, 0 rows affected (0.078 sec)
+
+MariaDB [grosvenor_hotel]> create table department(deptno int primary key, deptname varchar(20), mgrempno varchar(10));
+Query OK, 0 rows affected (0.046 sec)
+
+MariaDB [grosvenor_hotel]> create table project(projno varchar(20) primary key, projname varchar(30), deptno int);
+Query OK, 0 rows affected (0.048 sec)
+
+MariaDB [grosvenor_hotel]> create table workson(empno varchar(10), projno varchar(20), dateworked date, hoursworked time, primary key(empno, projno, dateworked));
+Query OK, 0 rows affected (0.041 sec)
+
+
+MariaDB [grosvenor_hotel]> alter table department modify deptno varchar(5);
+Query OK, 0 rows affected (0.080 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+MariaDB [grosvenor_hotel]> alter table department modify deptname varchar(50);
+Query OK, 0 rows affected (0.046 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> INSERT INTO Department (deptNo, deptName, mgrEmpNo) VALUES
+    -> ('D1', 'Human Resources', NULL),
+    -> ('D2', 'Engineering', NULL),
+    -> ('D3', 'Finance', NULL),
+    -> ('D4', 'Marketing', NULL),
+    -> ('D5', 'Research & Development', NULL),
+    -> ('D6', 'Legal', NULL),
+    -> ('D7', 'Customer Support', NULL),
+    -> ('D8', 'Sales', NULL),
+    -> ('D9', 'Information Technology', NULL),
+    -> ('D10', 'Operations', NULL),
+    -> ('D11', 'Quality Assurance', NULL),
+    -> ('D12', 'Logistics', NULL),
+    -> ('D13', 'Procurement', NULL),
+    -> ('D14', 'Public Relations', NULL),
+    -> ('D15', 'Strategy', NULL);
+Query OK, 15 rows affected (0.055 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+
+MariaDB [grosvenor_hotel]> alter table employee modify deptno varchar(5);
+Query OK, 0 rows affected (0.084 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> INSERT INTO Employee (empNo, fName, lName, address, DOB, sex, position, deptNo) VALUES
+    -> ('E001', 'Jeffrey', 'Adzeke', 'Accra, Ghana', '1995-04-12', 'M', 'HR Manager', 'D1'),
+    -> ('E002', 'Kwame', 'Seyram', 'Kumasi, Ghana', '1993-08-24', 'M', 'Lead Engineer', 'D2'),
+    -> ('E003', 'Alice', 'Silva', 'Sao Paulo, Brazil', '1990-11-02', 'F', 'Finance Director', 'D3'),
+    -> ('E004', 'Dmitry', 'Ivanov', 'Moscow, Russia', '1988-01-15', 'M', 'Marketing Specialist', 'D4'),
+    -> ('E005', 'Ravi', 'Kumar', 'Bangalore, India', '1994-06-30', 'M', 'R&D Director', 'D5'),
+    -> ('E006', 'Li', 'Wei', 'Shanghai, China', '1992-09-18', 'F', 'Legal Counsel', 'D6'),
+    -> ('E007', 'Thabo', 'Mbeki', 'Johannesburg, South Africa', '1985-05-14', 'M', 'Support Specialist', 'D7'),
+    -> ('E008', 'Emma', 'Watson', 'London, UK', '1991-04-15', 'F', 'Sales Manager', 'D8'),
+    -> ('E009', 'Carlos', 'Santos', 'Rio de Janeiro, Brazil', '1996-02-28', 'M', 'IT Administrator', 'D9'),
+    -> ('E010', 'Elena', 'Petrova', 'St. Petersburg, Russia', '1993-07-07', 'F', 'Operations Chief', 'D10'),
+    -> ('E011', 'Priya', 'Sharma', 'New Delhi, India', '1995-12-25', 'F', 'QA Engineer', 'D11'),
+    -> ('E012', 'Zhang', 'Min', 'Beijing, China', '1990-03-10', 'M', 'Logistics Manager', 'D12'),
+    -> ('E013', 'Sipho', 'Zuma', 'Durban, South Africa', '1987-10-22', 'M', 'Procurement Officer', 'D13'),
+    -> ('E014', 'Hans', 'Mueller', 'Berlin, Germany', '1991-08-05', 'M', 'PR Specialist', 'D14'),
+    -> ('E015', 'Chloe', 'Dupont', 'Paris, France', '1994-01-19', 'F', 'Strategy Analyst', 'D15');
+Query OK, 15 rows affected (0.041 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E001' WHERE deptNo = 'D1';
+Query OK, 1 row affected (0.015 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E002' WHERE deptNo = 'D2';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E003' WHERE deptNo = 'D3';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E004' WHERE deptNo = 'D4';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E005' WHERE deptNo = 'D5';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E006' WHERE deptNo = 'D6';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E007' WHERE deptNo = 'D7';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E008' WHERE deptNo = 'D8';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E009' WHERE deptNo = 'D9';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E010' WHERE deptNo = 'D10';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E011' WHERE deptNo = 'D11';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E012' WHERE deptNo = 'D12';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E013' WHERE deptNo = 'D13';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E014' WHERE deptNo = 'D14';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Department SET mgrEmpNo = 'E015' WHERE deptNo = 'D15';
+Query OK, 1 row affected (0.075 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [grosvenor_hotel]> alter table project modify projno varchar(5);
+Query OK, 0 rows affected (0.070 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> alter table project modify deptno varchar(5);
+Query OK, 0 rows affected (0.085 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> INSERT INTO Project (projNo, projName, deptNo) VALUES
+    -> ('P101', 'Talent Acquisition System', 'D1'),
+    -> ('P102', 'Cloud Infrastructure Migration', 'D2'),
+    -> ('P103', 'Automated Ledger Ledger', 'D3'),
+    -> ('P104', 'Global Campaign Q3', 'D4'),
+    -> ('P105', 'NextGen Engine Core', 'D5'),
+    -> ('P106', 'IP Protection Framework', 'D6'),
+    -> ('P107', 'CRM Integration Pipeline', 'D7'),
+    -> ('P108', 'Enterprise Growth Expansion', 'D8'),
+    -> ('P109', 'Cybersecurity Shield Protocol', 'D9'),
+    -> ('P110', 'Supply Optimization Matrix', 'D10'),
+    -> ('P111', 'Automated Integration Testing', 'D11'),
+    -> ('P112', 'Warehouse Relocation Sync', 'D12'),
+    -> ('P113', 'Vendor Evaluation Matrix', 'D13'),
+    -> ('P114', 'Brand Rejuvenation Plan', 'D14'),
+    -> ('P115', 'Vision 2030 Roadmap', 'D15');
+Query OK, 15 rows affected (0.040 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+
+MariaDB [grosvenor_hotel]> alter table workson modify projno varchar(5);
+Query OK, 0 rows affected (0.087 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> alter table workson modify empno varchar(5);
+Query OK, 0 rows affected (0.072 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> INSERT INTO WorksOn (empNo, projNo, dateWorked, hoursWorked) VALUES
+    -> ('E001', 'P101', '2026-06-01', 8.00),
+    -> ('E002', 'P102', '2026-06-01', 7.50),
+    -> ('E003', 'P103', '2026-06-02', 6.00),
+    -> ('E004', 'P104', '2026-06-02', 8.00),
+    -> ('E005', 'P105', '2026-06-03', 9.25),
+    -> ('E006', 'P106', '2026-06-03', 4.50),
+    -> ('E007', 'P107', '2026-06-04', 8.00),
+    -> ('E008', 'P108', '2026-06-04', 7.00),
+    -> ('E009', 'P109', '2026-06-05', 8.50),
+    -> ('E010', 'P110', '2026-06-05', 6.75),
+    -> ('E011', 'P111', '2026-06-08', 8.00),
+    -> ('E012', 'P112', '2026-06-08', 5.50),
+    -> ('E013', 'P113', '2026-06-09', 7.25),
+    -> ('E014', 'P114', '2026-06-09', 8.00),
+    -> ('E015', 'P115', '2026-06-10', 9.00);
+Query OK, 15 rows affected (0.004 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+
+MariaDB [grosvenor_hotel]> alter table workson add foreign key(empno) references employee(empno);
+Query OK, 15 rows affected (0.041 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+
+MariaDB [grosvenor_hotel]> alter table workson add foreign key(projno) references project(projno);
+Query OK, 15 rows affected (0.075 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> alter table project add foreign key(deptno) references department(deptno);
+Query OK, 15 rows affected (0.088 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> alter table employee add foreign key(deptno) references department(deptno);
+Query OK, 15 rows affected (0.089 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> alter table employee add check (sex in('m','f'));
+Query OK, 15 rows affected (0.082 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> alter table employee drop column position;
+Query OK, 0 rows affected (0.061 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> alter table employee add position varchar(30);
+Query OK, 0 rows affected (0.019 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> alter table employee add constraint chek_emp_position check(position in ('manager','team lead','analyst','software developer'));
+Query OK, 15 rows affected (0.160 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [grosvenor_hotel]> UPDATE Employee
+    -> SET position = CASE empNo
+    ->     -- Assigning 'manager'
+    ->     WHEN 'E001' THEN 'manager'
+    ->     WHEN 'E003' THEN 'manager'
+    ->     WHEN 'E005' THEN 'manager'
+    ->     WHEN 'E008' THEN 'manager'
+    ->     WHEN 'E010' THEN 'manager'
+    ->
+    ->     -- Assigning 'team lead'
+    ->     WHEN 'E002' THEN 'team lead'
+    ->     WHEN 'E012' THEN 'team lead'
+    ->     WHEN 'E014' THEN 'team lead'
+    ->
+    ->     -- Assigning 'analyst'
+    ->     WHEN 'E004' THEN 'analyst'
+    ->     WHEN 'E006' THEN 'analyst'
+    ->     WHEN 'E013' THEN 'analyst'
+    ->     WHEN 'E015' THEN 'analyst'
+    ->
+    ->     -- Assigning 'software developer'
+    ->     WHEN 'E007' THEN 'software developer'
+    ->     WHEN 'E009' THEN 'software developer'
+    ->     WHEN 'E011' THEN 'software developer'
+    ->
+    ->     -- Fallback safety measure
+    ->     ELSE position
+    -> END;
+Query OK, 15 rows affected (0.005 sec)
+Rows matched: 15  Changed: 15  Warnings: 0
+
+MariaDB [grosvenor_hotel]> create view femalemanagerprojects as select e.empno, e.fname, e.lname, e.position, e.sex, d.deptno, d.deptname, p.projno, p.projname from employee e inner join department d on e.empno = d.mgrempno inner join project p on d.deptno = p.deptno where e.sex = 'f' and e.position = 'manager' order by p.projno;
+Query OK, 0 rows affected (0.021 sec)
+
+MariaDB [grosvenor_hotel]> create view employeeprojecthours as select e.empno, e.fname, e.lname, p.projname, w.hoursworked from employee e join workson w on e.empno = w.empno join project p on w.projno= p.projno;
+Query OK, 0 rows affected (0.048 sec)
+
+MariaDB [grosvenor_hotel]> select * from employeeprojecthours;
++-------+---------+---------+--------------------------------+-------------+
+| empno | fname   | lname   | projname                       | hoursworked |
++-------+---------+---------+--------------------------------+-------------+
+| E001  | Jeffrey | Adzeke  | Talent Acquisition System      | 00:00:08    |
+| E002  | Kwame   | Seyram  | Cloud Infrastructure Migration | 00:00:07    |
+| E003  | Alice   | Silva   | Automated Ledger Ledger        | 00:00:06    |
+| E004  | Dmitry  | Ivanov  | Global Campaign Q3             | 00:00:08    |
+| E005  | Ravi    | Kumar   | NextGen Engine Core            | 00:00:09    |
+| E006  | Li      | Wei     | IP Protection Framework        | 00:00:04    |
+| E007  | Thabo   | Mbeki   | CRM Integration Pipeline       | 00:00:08    |
+| E008  | Emma    | Watson  | Enterprise Growth Expansion    | 00:00:07    |
+| E009  | Carlos  | Santos  | Cybersecurity Shield Protocol  | 00:00:08    |
+| E010  | Elena   | Petrova | Supply Optimization Matrix     | 00:00:06    |
+| E011  | Priya   | Sharma  | Automated Integration Testing  | 00:00:08    |
+| E012  | Zhang   | Min     | Warehouse Relocation Sync      | 00:00:05    |
+| E013  | Sipho   | Zuma    | Vendor Evaluation Matrix       | 00:00:07    |
+| E014  | Hans    | Mueller | Brand Rejuvenation Plan        | 00:00:08    |
+| E015  | Chloe   | Dupont  | Vision 2030 Roadmap            | 00:00:09    |
++-------+---------+---------+--------------------------------+-------------+
+15 rows in set (0.135 sec)
+
+MariaDB [grosvenor_hotel]> select * from femalemanagerprojects;
++-------+-------+---------+----------+------+--------+------------+--------+-----------------------------+
+| empno | fname | lname   | position | sex  | deptno | deptname   | projno | projname                    |
++-------+-------+---------+----------+------+--------+------------+--------+-----------------------------+
+| E003  | Alice | Silva   | manager  | F    | D3     | Finance    | P103   | Automated Ledger Ledger     |
+| E008  | Emma  | Watson  | manager  | F    | D8     | Sales      | P108   | Enterprise Growth Expansion |
+| E010  | Elena | Petrova | manager  | F    | D10    | Operations | P110   | Supply Optimization Matrix  |
++-------+-------+---------+----------+------+--------+------------+--------+-----------------------------+
+3 rows in set (0.043 sec)
+
+MariaDB [grosvenor_hotel]>  create view empproject(empno, projno, totalhours) as select w.empno, w.projno, sum(hoursworked) from employee e, project p, workson w where e.empno = w.empno and p.projno = w.projno group by w.empno, w.projno;
+Query OK, 0 rows affected (0.049 sec)
+
+MariaDB [grosvenor_hotel]> select * from empproject;
++-------+--------+------------+
+| empno | projno | totalhours |
++-------+--------+------------+
+| E001  | P101   |          8 |
+| E002  | P102   |          7 |
+| E003  | P103   |          6 |
+| E004  | P104   |          8 |
+| E005  | P105   |          9 |
+| E006  | P106   |          4 |
+| E007  | P107   |          8 |
+| E008  | P108   |          7 |
+| E009  | P109   |          8 |
+| E010  | P110   |          6 |
+| E011  | P111   |          8 |
+| E012  | P112   |          5 |
+| E013  | P113   |          7 |
+| E014  | P114   |          8 |
+| E015  | P115   |          9 |
++-------+--------+------------+
+15 rows in set (0.043 sec)
+
+MariaDB [grosvenor_hotel]> select projno from empproject where projno = 'sccs';
+Empty set (0.040 sec)
+
+MariaDB [grosvenor_hotel]> select count(projno) from empproject where empno = 'e1';
++---------------+
+| count(projno) |
++---------------+
+|             0 |
++---------------+
+1 row in set (0.002 sec)
+
+MariaDB [grosvenor_hotel]> select empno, totalhours from empproject group by empno;
++-------+------------+
+| empno | totalhours |
++-------+------------+
+| E001  |          8 |
+| E002  |          7 |
+| E003  |          6 |
+| E004  |          8 |
+| E005  |          9 |
+| E006  |          4 |
+| E007  |          8 |
+| E008  |          7 |
+| E009  |          8 |
+| E010  |          6 |
+| E011  |          8 |
+| E012  |          5 |
+| E013  |          7 |
+| E014  |          8 |
+| E015  |          9 |
++-------+------------+
+15 rows in set (0.002 sec)
